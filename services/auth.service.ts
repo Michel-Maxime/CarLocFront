@@ -1,12 +1,13 @@
 import { LoginData } from "../models/loginData";
 import { RegisterData } from "../models/registerData";
+import { SERVER_URL, LOGIN_ENDPOINT, REGISTER_ENDPOINT } from "./constants";
 
 // TODO : voir pour faire de l'injection de dependence propre
 class AuthService {
   constructor() {}
 
   async login(state: LoginData) {
-    const res = await fetch(`http://localhost:5000/auth/signin`, {
+    const res = await fetch(`${SERVER_URL}${LOGIN_ENDPOINT}`, {
       method: "POST",
       body: JSON.stringify(state),
       headers: {
@@ -21,7 +22,7 @@ class AuthService {
   }
 
   async register(state: RegisterData) {
-    const res = await fetch(`http://localhost:5000/auth/signup`, {
+    const res = await fetch(`${SERVER_URL}${REGISTER_ENDPOINT}`, {
       method: "POST",
       body: JSON.stringify(state),
       headers: {
