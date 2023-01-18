@@ -1,4 +1,9 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import {
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+  NextPageContext,
+} from "next";
+import { useEffect } from "react";
 import { Car } from "../models/car";
 import carsService from "../services/cars.service";
 
@@ -6,26 +11,34 @@ export default function AllOffer({
   data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const cars: Car[] = data;
+
   return (
     <>
-      {cars?.map(
-        ({ ownerId, image, name, description, price, isAvaible }, index) => (
-          <div key={index} style={{ border: "2px solid black" }}>
-            <p>{image}</p>
-            <p>{name}</p>
-            <p>{description}</p>
-            <p>{price}</p>
-            <p>{isAvaible}</p>
-          </div>
-        )
-      )}
+      {cars.length > 2
+        ? cars?.map(
+            (
+              { ownerId, image, name, description, price, isAvaible },
+              index
+            ) => (
+              <div key={index} style={{ border: "2px solid black" }}>
+                <p>{image}</p>
+                <p>{name}</p>
+                <p>{description}</p>
+                <p>{price}</p>
+                <p>{isAvaible}</p>
+              </div>
+            )
+          )
+        : "Ups not login"}
     </>
   );
 }
 
 export const getServerSideProps: GetServerSideProps<{
   data: Car[];
-}> = async () => {
-  const data = await carsService.getCars();
+}> = async (ctx) => {
+  const cookie = ctx.req?.headers.cookie;
+
+  const data = await carsService.getCars(cookie);
   return { props: { data } };
 };

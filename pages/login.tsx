@@ -12,11 +12,12 @@ export default function Login() {
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
+  useEffect(() => {}, []);
 
   const login = async () => {
     // TODO : check si ca c'est bien passé
     await authService.login(state).then(() => {
-      router.push("/addOffer");
+      router.push("/allOffer");
     });
   };
 

@@ -1,27 +1,34 @@
 import { LoginData } from "../models/loginData";
 import { RegisterData } from "../models/registerData";
-import { SERVER_URL, LOGIN_ENDPOINT, REGISTER_ENDPOINT } from "./constants";
+import {
+  SERVER_URL,
+  LOGIN_ENDPOINT,
+  REGISTER_ENDPOINT,
+  LOGOUT_ENDPOINT,
+} from "./constants";
 
-// TODO : voir pour faire de l'injection de dependence propre
 class AuthService {
-  constructor() {}
+  token: string = "";
 
-  async login(state: LoginData) {
-    const res = await fetch(`${SERVER_URL}${LOGIN_ENDPOINT}`, {
+  async login(state: LoginData): Promise<void> {
+    await fetch(`${SERVER_URL}${LOGIN_ENDPOINT}`, {
       method: "POST",
+      credentials: "include",
       body: JSON.stringify(state),
       headers: {
+        Accept: "application/json",
         "Content-Type": "application/json",
       },
-    });
-    if (res.ok) {
-      alert("login ok");
-    } else {
-      alert("login Bad credentials");
-    }
+    })
+      .then(async (res) => {
+        return await res.json();
+      })
+      .then((resJson) => {
+        console.log(resJson);
+      });
   }
 
-  async register(state: RegisterData) {
+  async register(state: RegisterData): Promise<void> {
     const res = await fetch(`${SERVER_URL}${REGISTER_ENDPOINT}`, {
       method: "POST",
       body: JSON.stringify(state),
@@ -33,6 +40,21 @@ class AuthService {
       alert("register ok");
     } else {
       alert("register Bad credentials");
+    }
+  }
+
+  async logout(): Promise<void> {
+    const res = await fetch(`${SERVER_URL}${LOGOUT_ENDPOINT}`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.ok) {
+      alert("logout ok");
+    } else {
+      alert("logout error");
     }
   }
 }
