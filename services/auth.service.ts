@@ -31,6 +31,7 @@ class AuthService {
   async register(state: RegisterData): Promise<void> {
     const res = await fetch(`${SERVER_URL}${REGISTER_ENDPOINT}`, {
       method: "POST",
+      credentials: "include",
       body: JSON.stringify(state),
       headers: {
         "Content-Type": "application/json",

@@ -21,11 +21,13 @@ export default function AllOffer({
               index
             ) => (
               <div key={index} style={{ border: "2px solid black" }}>
+                <p>OWNERID : {ownerId}</p>
                 <p>{image}</p>
                 <p>{name}</p>
                 <p>{description}</p>
                 <p>{price}</p>
                 <p>{isAvaible}</p>
+                <button>LOUER CETTE VOITURE</button>
               </div>
             )
           )
