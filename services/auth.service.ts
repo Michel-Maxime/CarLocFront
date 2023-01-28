@@ -8,8 +8,6 @@ import {
 } from "./constants";
 
 class AuthService {
-  token: string = "";
-
   async login(state: LoginData): Promise<void> {
     await fetch(`${SERVER_URL}${LOGIN_ENDPOINT}`, {
       method: "POST",
@@ -45,18 +43,13 @@ class AuthService {
   }
 
   async logout(): Promise<void> {
-    const res = await fetch(`${SERVER_URL}${LOGOUT_ENDPOINT}`, {
+    await fetch(`${SERVER_URL}${LOGOUT_ENDPOINT}`, {
       method: "GET",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
     });
-    if (res.ok) {
-      alert("logout ok");
-    } else {
-      alert("logout error");
-    }
   }
 }
 

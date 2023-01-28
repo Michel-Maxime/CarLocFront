@@ -6,17 +6,14 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import { FormEvent, useEffect, useState } from "react";
+import paymentService from "../services/payment.service";
+import payInfos from "../models/payInfos";
 
-function Payment() {
-  // todo : do an object
-  const car = {
-    id: "8ee20657-5d49-4d0d-a022-2cd0887052b1",
-    ownerId: "1b0e683a-a252-4426-97c1-b0d8157b1999",
-    price: 15,
-  };
-
+function Payment(props: payInfos) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState("");
+
+  const { carId, ownerId } = props;
 
   const stripe = useStripe();
   const elements = useElements();
@@ -38,18 +35,10 @@ function Payment() {
     setIsProcessing(true);
 
     try {
-      const res = await fetch("http://localhost:5000/stripe", {
-        method: "POST",
-        credentials: "include",
-        body: JSON.stringify({ car }),
-        headers: {
-          "Content-Type": "application/json",
-        },
+      const clientSecret: string = await paymentService.Pay({
+        carId,
+        ownerId,
       });
-
-      const data = await res.json();
-
-      const { client_secret: clientSecret } = data;
 
       const { paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
@@ -83,14 +72,14 @@ function Payment() {
   );
 }
 
-const PaymentGateway = () => {
+const PaymentGateway = (props: payInfos) => {
   const stripePromise = loadStripe(
     "pk_test_51MRuNeEcMIwCpU5crLRA92TARZ8aCzr6lhaMe0qWOttPZOxPIziNo9QgMcVuK8jlCzgeINrUmXy89uhiUk6KewBh00f1YsoI7K"
   );
 
   return (
     <Elements stripe={stripePromise}>
-      <Payment />
+      <Payment carId={props.carId} ownerId={props.ownerId} />
     </Elements>
   );
 };

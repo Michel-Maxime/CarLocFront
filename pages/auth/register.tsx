@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
-import { RegisterData } from "../models/registerData";
-import authService from "../services/auth.service";
+import { RegisterData } from "../../models/registerData";
+import authService from "../../services/auth.service";
 
 export default function Register() {
   const router = useRouter();

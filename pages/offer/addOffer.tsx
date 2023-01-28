@@ -1,9 +1,10 @@
 import { ChangeEvent, useState } from "react";
-import { Car } from "../models/car";
-import carsService from "../services/cars.service";
+import { Car } from "../../models/car";
+import carsService from "../../services/cars.service";
 
 export default function AddOffer() {
   const [state, setState] = useState<Car>({
+    id: "016b02bb-61b2-4a31-bac1-ad88b3deea32",
     ownerId: "016b02bb-61b2-4a31-bac1-ad88b3deea31", //TODO: get L'id du current User
     image: "",
     name: "",

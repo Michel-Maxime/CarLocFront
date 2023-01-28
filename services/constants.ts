@@ -3,3 +3,5 @@ export const LOGIN_ENDPOINT = "/auth/signin";
 export const REGISTER_ENDPOINT = "/auth/signup";
 export const LOGOUT_ENDPOINT = "/auth/signout";
 export const CARS_ENDPOINT = "/cars";
+export const USERS_ENDPOINT = "/users";
+export const STRIPE_ENDPOINT = "/stripe";

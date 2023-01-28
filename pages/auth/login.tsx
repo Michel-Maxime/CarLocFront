@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ChangeEvent, use, useEffect, useState } from "react";
-import { LoginData } from "../models/loginData";
-import authService from "../services/auth.service";
+import { LoginData } from "../../models/loginData";
+import authService from "../../services/auth.service";
 import { useRouter } from "next/router";
 
 export default function Login() {
@@ -17,7 +17,7 @@ export default function Login() {
   const login = async () => {
     // TODO : check si ca c'est bien passé
     await authService.login(state).then(() => {
-      router.push("/allOffer");
+      router.push("/offer/allOffer");
     });
   };
 

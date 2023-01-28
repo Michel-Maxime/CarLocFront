@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import carsService from "../services/cars.service";
+import carsService from "../../services/cars.service";
 
 export default function DeleteOffer() {
   const [carId, setCarID] = useState<string>("");

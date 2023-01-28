@@ -37,8 +37,12 @@ class CarsService {
 
   //l'objet car doit avoir un id pck sinon on pourra jamais get byId ou delete
   // ou alors faire un Objetc Car et un CarDto
-  async GetCarByID(carId: string): Promise<Car> {
-    var res = await fetch(`${SERVER_URL}${CARS_ENDPOINT}/${carId}`);
+  async GetCarByID(carId: string, cookie: string | undefined): Promise<Car> {
+    var res = await fetch(`${SERVER_URL}${CARS_ENDPOINT}/${carId}`, {
+      headers: {
+        cookie: cookie!,
+      },
+    });
     const car: Car = await res.json();
     return car;
   }
