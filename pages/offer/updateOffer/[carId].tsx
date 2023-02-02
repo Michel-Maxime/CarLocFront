@@ -1,4 +1,11 @@
 import {
+  Button,
+  FormElement,
+  Input,
+  Spacer,
+  Textarea,
+} from "@nextui-org/react";
+import {
   GetServerSideProps,
   InferGetServerSidePropsType,
   NextPageContext,
@@ -13,7 +20,7 @@ export default function UpdateOffer({
   const { id: carId } = data;
   const [state, setState] = useState<Car>(data);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (e: ChangeEvent<FormElement>): void => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
 
@@ -22,36 +29,64 @@ export default function UpdateOffer({
   };
 
   return (
-    <div>
-      <input
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: "150px",
+      }}
+    >
+      <Spacer y={2} />
+      <Input
+        width="50%"
         type="text"
+        clearable
         name="image"
-        placeholder="image"
+        underlined
+        labelPlaceholder="Picture"
+        initialValue="Picture"
         value={state.image}
         onChange={handleChange}
-      ></input>
-      <input
+      />
+      <Spacer y={3} />
+      <Input
+        width="50%"
         type="text"
+        clearable
+        underlined
         name="name"
-        placeholder="name"
+        labelPlaceholder="Name"
+        initialValue="Name"
         value={state.name}
         onChange={handleChange}
-      ></input>
-      <input
-        type="text"
+      />
+      <Spacer y={3} />
+      <Textarea
+        width="50%"
         name="description"
-        placeholder="description"
+        labelPlaceholder="Description"
+        initialValue="Description"
         value={state.description}
         onChange={handleChange}
-      ></input>
-      <input
+      />
+      <Spacer y={3} />
+      <Input
+        width="50%"
         type="number"
+        clearable
+        underlined
         name="price"
-        placeholder="price"
+        labelPlaceholder="Price"
+        initialValue="Price"
         value={state.price}
         onChange={handleChange}
-      ></input>
-      <button onClick={updateOffer}>post changes</button>
+      />
+      <Spacer y={3} />
+      <Button size="sm" color="warning" shadow onPress={updateOffer}>
+        Upload Changes
+      </Button>
     </div>
   );
 }

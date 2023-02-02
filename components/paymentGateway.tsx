@@ -4,6 +4,7 @@ import {
   CardElement,
   useStripe,
   useElements,
+  PaymentElement,
 } from "@stripe/react-stripe-js";
 import { FormEvent, useEffect, useState } from "react";
 import paymentService from "../services/payment.service";
@@ -64,6 +65,7 @@ function Payment(props: payInfos) {
       <form onSubmit={handleSubmit} id="payment-form">
         <label htmlFor="card-element">Place order</label>
         <CardElement id="card-element" />
+        {/* <PaymentElement /> */}
         {!isProcessing && <button style={{}}>Pay</button>}
         {isProcessing && <div>Processing...</div>}
         {isProcessing && paymentStatus && <div>Status: {paymentStatus}</div>}
@@ -78,7 +80,10 @@ const PaymentGateway = (props: payInfos) => {
   );
 
   return (
-    <Elements stripe={stripePromise}>
+    <Elements
+      stripe={stripePromise}
+      options={{ appearance: { theme: "flat" } }}
+    >
       <Payment carId={props.carId} ownerId={props.ownerId} />
     </Elements>
   );

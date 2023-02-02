@@ -9,7 +9,7 @@ import {
 
 class AuthService {
   async login(state: LoginData): Promise<void> {
-    await fetch(`${SERVER_URL}${LOGIN_ENDPOINT}`, {
+    const res = await fetch(`${SERVER_URL}${LOGIN_ENDPOINT}`, {
       method: "POST",
       credentials: "include",
       body: JSON.stringify(state),
@@ -17,13 +17,12 @@ class AuthService {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-    })
-      .then(async (res) => {
-        return await res.json();
-      })
-      .then((resJson) => {
-        console.log(resJson);
-      });
+    });
+
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.message);
+    }
   }
 
   async register(state: RegisterData): Promise<void> {
@@ -35,10 +34,10 @@ class AuthService {
         "Content-Type": "application/json",
       },
     });
-    if (res.ok) {
-      alert("register ok");
-    } else {
-      alert("register Bad credentials");
+    if (!res.ok) {
+      const data = await res.json();
+      console.log(data);
+      throw new Error(data.message);
     }
   }
 
